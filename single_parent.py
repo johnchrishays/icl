@@ -17,23 +17,31 @@ def main(
     seed = 1,
     lr: float = 1,
     wd: float = 0,
-    steps: int = 2**16,
+    steps: int = 2**17,
     n_save: int = 128,
     batch_size: int = 1024,
     max_size: int = 2**20,
+    causal_mask: bool = True,
+    scratchpad: bool = True,
 ):
     config = locals()
     rng = RNG(seed)
-    seq_len = num_features*2
+    if scratchpad:
+        seq_len = num_features*4
+    else:
+        seq_len = num_features*2
 
     problem = InContextTree(
         num_features=num_features,
+        scratchpad=scratchpad,
     )
 
     model = CatFormer(
         seq_len=seq_len,
         num_features=num_features,
         heads=[1, 1],
+        causal_mask=causal_mask,
+        scratchpad=scratchpad,
     )
 
     @jit
@@ -113,19 +121,19 @@ def main(
     
     fig = plot_A1(model.A[0][0], num_features, seq_len, lower, upper)
     filename = wandb.run.dir + f"/A1.png"
-    plt.savefig(filename, bbox_inches="tight", dpi=100)
+    plt.savefig(filename, bbox_inches="tight", dpi=300)
     wandb.log({f"A1/{lower}_{upper}": wandb.Image(Image.open(filename))})
     plt.close(fig)
 
     fig = plot_A2(model.A[1][0], num_features, seq_len, lower, upper)
     filename = wandb.run.dir + f"/A2.png"
-    plt.savefig(filename, bbox_inches="tight", dpi=100)
+    plt.savefig(filename, bbox_inches="tight", dpi=300)
     wandb.log({f"A2/{lower}_{upper}": wandb.Image(Image.open(filename))})
     plt.close(fig)
 
     fig = plot_W(model.W.T, num_features, seq_len, lower, upper)
     filename = wandb.run.dir + f"/W.png"
-    plt.savefig(filename, bbox_inches="tight", dpi=100)
+    plt.savefig(filename, bbox_inches="tight", dpi=300)
     wandb.log({f"W/{lower}_{upper}": wandb.Image(Image.open(filename))})
     plt.close(fig)
 

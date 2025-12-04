@@ -7,11 +7,14 @@ from simple_pytree import Pytree, static_field
 
 class CatFormer(Pytree):
     num_features: int = static_field()
+    causal_mask: bool = static_field()
+    scratchpad: bool = static_field()
 
     def attn(self, x, A):
         T = x.shape[-2]
         attn = jnp.einsum("...ij,jk,...lk -> ...il", x, A, x)
-        attn = jnp.where(jnp.tri(T), attn, -jnp.inf)
+        if self.causal_mask:
+            attn = jnp.where(jnp.tri(T), attn, -jnp.inf)
         attn = nn.softmax(attn)
         attn = jnp.einsum("...ij,...jk->...ik", attn, x)
         return attn
@@ -28,8 +31,12 @@ class CatFormer(Pytree):
         seq_len,
         num_features,
         heads,
+        causal_mask,
+        scratchpad,
     ):
         self.num_features = num_features
+        self.causal_mask = causal_mask
+        self.scratchpad = scratchpad
         d = seq_len + num_features
         self.A = []
         for n_head in heads:
@@ -54,7 +61,14 @@ class CatFormer(Pytree):
             attn = jax.vmap(self.attn, (None, 0), -2)(x, Ai)
             attn = attn.reshape(*attn.shape[:-2], -1)
             x = jnp.concatenate([x, attn], -1)
-        x = x[..., :self.num_features, :]
+        if self.scratchpad:
+            if self.causal_mask:
+                x = x[..., self.num_features*3:, :]
+            else:
+                x = x[..., :self.num_features, :]
+        else:
+            x = x[..., :self.num_features, :]
+        # x = x[..., :self.num_features, :]
         # return nn.softmax(x @ self.W)
         return x @ self.W
     

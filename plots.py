@@ -182,15 +182,15 @@ def plot_A2(
         )
         fig.patches.extend(
             [
-                plt.Rectangle(
-                    [bbox[0, i, 0, 0].x0, bbox[0, i, 0, 0].y1 + vpad],
-                    bbox[0, i, 0, 1].x1 - bbox[0, i, 0, 0].x0,
-                    height,
-                    transform=fig.transFigure,
-                    clip_on=False,
-                    fill=None,
-                    edgecolor="k",
-                ),
+                # plt.Rectangle(
+                #     [bbox[0, i, 0, 0].x0, bbox[0, i, 0, 0].y1 + vpad],
+                #     bbox[0, i, 0, 1].x1 - bbox[0, i, 0, 0].x0,
+                #     height,
+                #     transform=fig.transFigure,
+                #     clip_on=False,
+                #     fill=None,
+                #     edgecolor="k",
+                # ),
                 plt.text(
                     (bbox[0, i, 0, 0].x0 + bbox[0, i, 0, 1].x1) / 2,
                     bbox[0, i, 0, 0].y1 + vpad + height / 2,
@@ -200,15 +200,15 @@ def plot_A2(
                     transform=fig.transFigure,
                     fontsize=bigfont,
                 ),
-                plt.Rectangle(
-                    [bbox[i, 0, 0, 0].x0 - hpad, bbox[i, 0, 0, 0].y1],
-                    -height,
-                    bbox[i, 0, 1, 0].y0 - bbox[i, 0, 0, 0].y1,
-                    transform=fig.transFigure,
-                    clip_on=False,
-                    fill=None,
-                    edgecolor="k",
-                ),
+                # plt.Rectangle(
+                #     [bbox[i, 0, 0, 0].x0 - hpad, bbox[i, 0, 0, 0].y1],
+                #     -height,
+                #     bbox[i, 0, 1, 0].y0 - bbox[i, 0, 0, 0].y1,
+                #     transform=fig.transFigure,
+                #     clip_on=False,
+                #     fill=None,
+                #     edgecolor="k",
+                # ),
                 plt.text(
                     bbox[i, 0, 0, 0].x0 - hpad - height / 2,
                     (bbox[i, 0, 1, 0].y0 + bbox[i, 0, 0, 0].y1) / 2,
@@ -232,8 +232,8 @@ def plot_W(
     upper,
     fontsize=18,
     bigfont=20,
-    vpad=0.06,
-    hpad=0.06,
+    vpad=0.1,
+    hpad=0.1,
     height=0.06,
     patch=False,
 ):
@@ -343,15 +343,15 @@ def plot_W(
     aspect = fig.get_figheight() / fig.get_figwidth()
     fig.patches.extend(
         [
-            plt.Rectangle(
-                [bbox[0][0].x0, bbox[0][0].y1 + vpad],
-                bbox[0][1].x1 - bbox[0][0].x0,
-                height,
-                transform=fig.transFigure,
-                clip_on=False,
-                fill=None,
-                edgecolor="k",
-            ),
+            # plt.Rectangle(
+            #     [bbox[0][0].x0, bbox[0][0].y1 + vpad],
+            #     bbox[0][1].x1 - bbox[0][0].x0,
+            #     height,
+            #     transform=fig.transFigure,
+            #     clip_on=False,
+            #     fill=None,
+            #     edgecolor="k",
+            # ),
             plt.text(
                 (bbox[0][1].x1 + bbox[0][0].x0) / 2,
                 bbox[0][0].y1 + vpad + height / 2,
@@ -361,15 +361,15 @@ def plot_W(
                 transform=fig.transFigure,
                 fontsize=bigfont,
             ),
-            plt.Rectangle(
-                [bbox[1][0].x0, bbox[1][0].y1 + vpad],
-                bbox[1][1].x1 - bbox[1][0].x0,
-                height,
-                transform=fig.transFigure,
-                clip_on=False,
-                fill=None,
-                edgecolor="k",
-            ),
+            # plt.Rectangle(
+            #     [bbox[1][0].x0, bbox[1][0].y1 + vpad],
+            #     bbox[1][1].x1 - bbox[1][0].x0,
+            #     height,
+            #     transform=fig.transFigure,
+            #     clip_on=False,
+            #     fill=None,
+            #     edgecolor="k",
+            # ),
             plt.text(
                 (bbox[1][1].x1 + bbox[1][0].x0) / 2,
                 bbox[1][0].y1 + vpad + height / 2,
@@ -379,15 +379,15 @@ def plot_W(
                 transform=fig.transFigure,
                 fontsize=bigfont,
             ),
-            plt.Rectangle(
-                [bbox[2][0][0].x0, bbox[1][0].y1 + vpad],
-                bbox[2][1][1].x1 - bbox[2][0][0].x0,
-                height,
-                transform=fig.transFigure,
-                clip_on=False,
-                fill=None,
-                edgecolor="k",
-            ),
+            # plt.Rectangle(
+            #     [bbox[2][0][0].x0, bbox[1][0].y1 + vpad],
+            #     bbox[2][1][1].x1 - bbox[2][0][0].x0,
+            #     height,
+            #     transform=fig.transFigure,
+            #     clip_on=False,
+            #     fill=None,
+            #     edgecolor="k",
+            # ),
             plt.text(
                 (bbox[2][1][1].x1 + bbox[2][0][0].x0) / 2,
                 bbox[1][0].y1 + vpad + height / 2,
@@ -397,15 +397,15 @@ def plot_W(
                 transform=fig.transFigure,
                 fontsize=bigfont,
             ),
-            plt.Rectangle(
-                [bbox[0][0].x0 - hpad * aspect, bbox[0][0].y0],
-                -height * aspect,
-                bbox[0][0].y1 - bbox[0][0].y0,
-                transform=fig.transFigure,
-                clip_on=False,
-                fill=None,
-                edgecolor="k",
-            ),
+            # plt.Rectangle(
+            #     [bbox[0][0].x0 - hpad * aspect, bbox[0][0].y0],
+            #     -height * aspect,
+            #     bbox[0][0].y1 - bbox[0][0].y0,
+            #     transform=fig.transFigure,
+            #     clip_on=False,
+            #     fill=None,
+            #     edgecolor="k",
+            # ),
             plt.text(
                 bbox[0][0].x0 - (hpad + height / 2) * aspect,
                 (bbox[0][0].y0 + bbox[0][0].y1) / 2,
